@@ -1,0 +1,88 @@
+<form class="mt-4" (ngSubmit)="addPost()" #postForm="ngForm" postRequired>
+  <div class="mb-3">
+    <label for="title">Title</label>
+    <input
+      type="text"
+      class="form-control"
+      name="title"
+      id="title"
+      placeholder="Your post's title"
+      minlength="5"
+      pattern="^[a-zA-Z][a-zA-Z ]*$"
+      [(ngModel)]="newPost.title"
+      #titleModel="ngModel"
+      [ngClass]="{
+        'is-invalid': titleModel.touched && !titleModel.valid
+      }"
+    />
+    @if(titleModel.errors?.['minlength']) {
+      <div class="invalid-feedback">Title must have at least 5 characters</div>
+    }
+    @if(titleModel.errors?.['pattern']) {
+      <div class="invalid-feedback">Title must contain only letters and spaces</div>
+    }
+  </div>
+  <div class="mb-3">
+    <label for="description">Description</label>
+    <textarea
+      class="form-control"
+      id="description"
+      name="description"
+      rows="3"
+      minlength="8"
+      placeholder="Write something..."
+      [(ngModel)]="newPost.description"
+      #descModel="ngModel"
+      [ngClass]="{
+        'is-invalid': descModel.touched && !descModel.valid
+      }"
+    ></textarea>
+    @if(descModel.errors?.['minlength']) {
+      <div class="invalid-feedback">Description must have at least 8 characters</div>
+    }
+  </div>
+  <div class="mb-3">
+    <label for="image">Photo</label>
+    <input
+      type="file"
+      class="form-control"
+      id="image"
+      name="image"
+      [(ngModel)]="fileName"
+      (change)="changeImage($event)"
+    />
+  </div>
+  @if (newPost.image) {
+  <img [src]="newPost.image" alt="" id="imgPreview" class="img-thumbnail" />
+  }
+  <div class="mb-3">
+    <label for="mood">Mood</label>
+    <select
+      class="form-select"
+      name="mood"
+      id="mood"
+      [(ngModel)]="newPost.mood"
+    >
+      <option value="0">Neutral</option>
+      <option value="1">Happy</option>
+      <option value="2">Angry</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <div class="col-auto">
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg"
+        [disabled]="postForm.invalid"
+      >
+        Create
+      </button>
+    </div>
+    @if(postForm.touched && postForm.errors?.['postRequired']) {
+      <div class="col my-auto text-danger">
+        The post must have at least a title, a description, or an image
+      </div>
+    }
+  </div>
+</form>

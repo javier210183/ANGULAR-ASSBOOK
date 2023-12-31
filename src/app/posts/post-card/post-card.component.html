@@ -1,0 +1,42 @@
+@if (post.image) {
+<img class="card-img-top" alt="" [src]="post.image" (click)="goDetails()" aria-hidden="true" />
+} @if (post.title || post.description) {
+<div class="card-body" (click)="goDetails()" aria-hidden="true">
+  <h5 class="card-title">{{ post.title }}</h5>
+  <p class="card-text">{{ post.description }}</p>
+</div>
+}
+<div class="card-footer bg-transparent">
+  <div class="row">
+    <div class="col-auto avatar ps-1 pe-1">
+      <img src="./assets/img/avatar.png" alt="" class="rounded-circle" />
+    </div>
+    <div class="col">
+      <div class="name">Bad guy</div>
+      <div>
+        <small class="text-muted">{{
+          post.date | date : "MM/dd/yyy hh:mm a"
+        }}</small>
+      </div>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-danger mr-3 h-100 delete" (click)="delete()">
+        Delete
+      </button>
+    </div>
+    <div class="col-auto pt-2">
+      <i
+        class="fa-regular fa-thumbs-up me-3"
+        [ngClass]="{ 'text-primary': post.likes }"
+        (click)="toggleLike(post)"
+        aria-hidden="true"
+      ></i>
+      <i
+        class="fa-regular fa-thumbs-down"
+        [ngClass]="{ 'text-danger': post.likes === false }"
+        (click)="toggleDislike(post)"
+        aria-hidden="true"
+      ></i>
+    </div>
+  </div>
+</div>

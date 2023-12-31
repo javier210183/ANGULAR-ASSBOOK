@@ -1,0 +1,14 @@
+<div class="mt-4">
+  <post-card
+    class="card mb-4 shadow"
+    [ngClass]="{
+      'border-success': post.mood === 1,
+      'border-danger': post.mood === 2
+    }"
+    [post]="post"
+    (deleted)="goBack()"
+  />
+</div>
+<div class="mt-4 mb-4">
+  <button class="btn btn-success" (click)="goBack()">Go back</button>
+</div>

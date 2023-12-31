@@ -1,0 +1,8 @@
+
+.card.border-success {
+  box-shadow: 0 .5rem 1rem rgba(0,80,0,.2) !important;
+}
+
+.card.border-danger {
+  box-shadow: 0 .5rem 1rem rgba(140,0,0,.2) !important;
+}
