@@ -11,4 +11,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class TopMenuComponent {
   title = 'AssBook';
+  logout(){
+    
+  }
 }

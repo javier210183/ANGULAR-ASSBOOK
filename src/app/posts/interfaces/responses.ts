@@ -7,3 +7,7 @@ export interface PostsResponse {
 export interface SinglePostResponse {
   post: Post;
 }
+
+export interface TokenResponse {
+  accesToken : string;
+}

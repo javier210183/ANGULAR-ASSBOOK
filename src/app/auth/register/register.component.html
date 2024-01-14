@@ -1,0 +1,85 @@
+<div class="container">
+  <form action="#" id="form-register" class="mt-4" method="POST" role="form">
+    <legend>Create an account</legend>
+
+    <div class="mb-3">
+      <label for="name">Name:</label>
+      <input type="text"
+       class="form-control"
+        id="name"
+         name="nameUser"
+          placeholder="Name"
+          required
+             [(ngModel)]="newUser"
+             #nameModel="ngModel"
+             [ngClass]="validClasses(nameModel, 'is-valid' , 'is-invalid')" 
+             />
+   
+    @if (nameModel.errors?.['required']) {
+      <div class="invalid-feedback">
+      el nombre no puede estar vacio
+      </div>
+    }
+  </div>
+    <div class="mb-3">
+      <label for="email">Email:</label>
+      <input type="email"
+       class="form-control"
+        id="email"
+         name="email" 
+         placeholder="Email"
+         required
+         [(ngModel)]="newUserEmail"
+             #emailModel="ngModel"
+             [ngClass]="validClassesEmail(emailModel, 'is-valid' , 'is-invalid')" 
+         />
+    </div>
+    <div class="mb-3">
+      <label for="email2">Repeat Email:</label>
+      <input type="email"
+       class="form-control"
+        id="email2"
+         name="email2"
+          placeholder="Email"
+          required
+         [(ngModel)]="newUserEmail"
+             #emailModel="ngModel"
+             [ngClass]="validClassesEmail(emailModel, 'is-valid' , 'is-invalid')" 
+           />
+    </div>
+    <div class="mb-3">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+    </div>
+    <div class="form-row">
+      <div class="mb-3 col">
+        <label for="lat">Latitude:</label>
+        <input type="text" class="form-control" id="lat" name="lat" placeholder="Geolocating..." readonly />
+      </div>
+      <div class="mb-3 col">
+        <label for="lng">Longitude:</label>
+        <input type="text" class="form-control" id="lng" name="lng" placeholder="Geolocating..." readonly />
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="avatar">Avatar image</label>
+      <input type="file"
+       class="form-control" 
+       id="avatar" 
+       accept="image/*"
+        (change)="changeImage($event)"
+        name="fileName"
+        required
+        ngModel
+        #imageModel="ngModel"
+        [ngClass]="{
+          'is-valid': imageModel.touched && imageModel.valid,
+          'is-invalid': imageModel.touched && !imageModel.valid
+        }" />
+    </div>
+    <img src="" alt="" id="imgPreview" class="img-thumbnail d-none" />
+    <p class="text-danger" id="errorInfo"></p>
+    <a class="btn btn-secondary" href="login.html" role="button">Go back</a>
+    <button type="submit" class="btn btn-primary">Create account</button>
+  </form>
+</div>

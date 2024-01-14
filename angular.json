@@ -87,6 +87,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/booststrap/dist/css/booststrap.css",
               "src/styles.css"
             ],
             "scripts": []

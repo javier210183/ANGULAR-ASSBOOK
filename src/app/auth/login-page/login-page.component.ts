@@ -11,9 +11,13 @@ import { Router } from '@angular/router';
   styleUrl: './login-page.component.css'
 })
 export class LoginPageComponent {
+register() {
+  this.#router.navigate(['/auth/register']);
+}
   #router = inject(Router);
 
   login() {
+    
     this.#router.navigate(['posts']);
   }
 }
