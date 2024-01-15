@@ -1,11 +1,9 @@
 export interface UserLogin {
+  lat: number;
+  lng: number;
+  avatar: string;
   email: string;
   password: string;
   latitud?: number;
   longitud?: number;
-}
-export interface newUser {
-  avatar: string;
-  // Otras propiedades específicas de NewUser
-  // ...
 }

@@ -14,7 +14,7 @@
              #nameModel="ngModel"
              [ngClass]="validClasses(nameModel, 'is-valid' , 'is-invalid')" 
              />
-   
+   <!--  -->
     @if (nameModel.errors?.['required']) {
       <div class="invalid-feedback">
       el nombre no puede estar vacio
@@ -54,11 +54,24 @@
     <div class="form-row">
       <div class="mb-3 col">
         <label for="lat">Latitude:</label>
-        <input type="text" class="form-control" id="lat" name="lat" placeholder="Geolocating..." readonly />
+        <input type="text" 
+        class="form-control"
+         id="lat" name="lat"
+          placeholder="Geolocating..." 
+          readonly 
+          [(ngModel)]="newUser.lat"
+          />
       </div>
       <div class="mb-3 col">
         <label for="lng">Longitude:</label>
-        <input type="text" class="form-control" id="lng" name="lng" placeholder="Geolocating..." readonly />
+        <input type="text"
+         class="form-control" 
+         id="lng" 
+         name="lng" 
+         placeholder="Geolocating..."
+          readonly 
+          [(ngModel)]="newUser.lng"
+          />
       </div>
     </div>
     <div class="mb-3">

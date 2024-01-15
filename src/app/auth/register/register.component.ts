@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 //import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { newUser } from '../../posts/interfaces/user';
+import {  UserLogin } from '../../posts/interfaces/user';
+import { MyGeolocationService } from '../../posts/services/my-geolocation.service';
 
 @Component({
   selector: 'app-register',
@@ -13,10 +14,18 @@ import { newUser } from '../../posts/interfaces/user';
 })
     export class RegisterComponent implements OnInit {
     nameModel: NgModel | undefined;
-    ngOnInit(): void {
-      throw new Error('Method not implemented.');
+    
+    async ngOnInit() {
+      this.newUser ={
+              
+      }
+      
+      this.location = await MyGeolocationService.getLocation();
+      this.newUser.lng = this.location.longitude;
+      this.newUser.lat = this.location.latitude;
+      console.log("esta es tu ubicacion ACTUALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL: ", location);
     }
-    newUser: unknown;
+    newUser!: UserLogin;
     validClasses(ngModel: NgModel, validClass: string, errorClass: string) {
       return {
         [validClass]: ngModel.touched && ngModel.valid,
