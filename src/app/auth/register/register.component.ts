@@ -4,6 +4,7 @@ import { FormsModule, NgModel } from '@angular/forms';
 //import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {  UserLogin } from '../../posts/interfaces/user';
 import { MyGeolocationService } from '../../posts/services/my-geolocation.service';
+import { AuthService } from '../../posts/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -12,45 +13,76 @@ import { MyGeolocationService } from '../../posts/services/my-geolocation.servic
   imports: [CommonModule,RegisterComponent,FormsModule],
   standalone : true
 })
-    export class RegisterComponent implements OnInit {
-    nameModel: NgModel | undefined;
-    
+export class RegisterComponent implements OnInit 
+  {
+  
+      nameModel: NgModel | undefined;
+    location: GeolocationCoordinates | undefined;
+    newUserEmail: string = '';
+      
     async ngOnInit() {
-      this.newUser ={
-              
-      }
-      
       this.location = await MyGeolocationService.getLocation();
-      this.newUser.lng = this.location.longitude;
-      this.newUser.lat = this.location.latitude;
-      console.log("esta es tu ubicacion ACTUALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL: ", location);
+      this.newUser = {
+        name:'',
+        longitud: this.location.longitude,
+        latitud: this.location.latitude,
+        avatar: '', // asignar el valor del avatar aquí
+      email: '', // asignar el valor del email aquí
+      password: '', // asignar el valor de la contraseña aquí
+    
+    };
+    console.log("esta es tu ubicacion ACTUALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL: ", this.location);
     }
-    newUser!: UserLogin;
-    validClasses(ngModel: NgModel, validClass: string, errorClass: string) {
-      return {
-        [validClass]: ngModel.touched && ngModel.valid,
-        [errorClass]: ngModel.touched && ngModel.invalid
-      };
-    }
-    newUserEmail: unknown;
-    validClassesEmail(ngModel: NgModel, validClass: string, errorClass: string) {
-      return {
-        [validClass]: ngModel.touched && ngModel.valid,
-        [errorClass]: ngModel.touched && ngModel.invalid
-      };
-    }
-    changeImage(event: Event) {
-      const fileInput = event.target as HTMLInputElement;
-      if (!fileInput.files || fileInput.files.length === 0)
-      return ;
-      
-    const reader = new FileReader();
-    reader.readAsDataURL(fileInput.files[0]);
-    reader.addEventListener('loadend', () => {
-      this.newUser.avatar = reader.result as string;
-    });
-    }
+    constructor(private authService: AuthService) {} // Inyecta AuthService aquí
+
+      newUser!: UserLogin;
+      validClasses(ngModel: NgModel, validClass: string, errorClass: string) {
+        return {
+          [validClass]: ngModel.touched && ngModel.valid,
+          [errorClass]: ngModel.touched && ngModel.invalid
+        };
+     }
+    
+        validClassesEmail(ngModel: NgModel, validClass: string, errorClass: string) {
+          return {
+            [validClass]: ngModel.touched && ngModel.valid,
+            [errorClass]: ngModel.touched && ngModel.invalid
+          };
+        }
+        changeImage(event: Event) {
+          const fileInput = event.target as HTMLInputElement;
+          if (!fileInput.files || fileInput.files.length === 0) {
+            return;
+          }
+          const file = fileInput.files[0];
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.newUser.avatar = reader.result as string; // Asume formato Base64
+          };
+          reader.readAsDataURL(file);
+        }
+        registerUser() {
+          // Opcional: Verificar que los emails coinciden antes de proceder
+          if (this.newUser.email !== this.newUserEmail) {
+            console.error('Los emails no coinciden.');
+            console.log('Email:', this.newUser.email);
+    console.log('Confirm Email:', this.newUserEmail);
+            return;
+          }
+          
+          this.authService.register(this.newUser).subscribe({
+            next: (response) => {
+              console.log('Registro exitoso', response);
+              // Redirigir al usuario o mostrar mensaje de éxito
+            },
+            error: (error) => {
+              console.error('Error en el registro', error);
+              // Mostrar mensaje de error
+            }
+          });
+  }
 }
+console.log("esta es tu ubicacion ACTUALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL: ", location);
 /*
 
   formGroup: FormGroup | undefined;

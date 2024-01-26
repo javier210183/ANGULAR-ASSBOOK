@@ -1,5 +1,5 @@
 <div class="container">
-  <form action="#" id="form-register" class="mt-4" method="POST" role="form">
+  <form (ngSubmit)="registerUser()" id="form-register" class="mt-4" role="form">
     <legend>Create an account</legend>
 
     <div class="mb-3">
@@ -10,7 +10,7 @@
          name="nameUser"
           placeholder="Name"
           required
-             [(ngModel)]="newUser"
+             [(ngModel)]="newUser.name"
              #nameModel="ngModel"
              [ngClass]="validClasses(nameModel, 'is-valid' , 'is-invalid')" 
              />
@@ -29,7 +29,7 @@
          name="email" 
          placeholder="Email"
          required
-         [(ngModel)]="newUserEmail"
+         [(ngModel)]="newUser.email"
              #emailModel="ngModel"
              [ngClass]="validClassesEmail(emailModel, 'is-valid' , 'is-invalid')" 
          />
@@ -40,16 +40,22 @@
        class="form-control"
         id="email2"
          name="email2"
-          placeholder="Email"
+          placeholder="Confirm Email"
           required
          [(ngModel)]="newUserEmail"
-             #emailModel="ngModel"
-             [ngClass]="validClassesEmail(emailModel, 'is-valid' , 'is-invalid')" 
+             #email2Model="ngModel"
+             [ngClass]="validClassesEmail(email2Model, 'is-valid' , 'is-invalid')" 
            />
     </div>
     <div class="mb-3">
       <label for="password">Password:</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+      <input type="password"
+       class="form-control" 
+       id="password"
+        name="password"
+         placeholder="Password" 
+         [(ngModel)]="newUser.password"
+      required />
     </div>
     <div class="form-row">
       <div class="mb-3 col">
@@ -59,7 +65,7 @@
          id="lat" name="lat"
           placeholder="Geolocating..." 
           readonly 
-          [(ngModel)]="newUser.lat"
+          [(ngModel)]="newUser.latitud"
           />
       </div>
       <div class="mb-3 col">
@@ -70,7 +76,7 @@
          name="lng" 
          placeholder="Geolocating..."
           readonly 
-          [(ngModel)]="newUser.lng"
+          [(ngModel)]="newUser.longitud"
           />
       </div>
     </div>
@@ -90,9 +96,9 @@
           'is-invalid': imageModel.touched && !imageModel.valid
         }" />
     </div>
-    <img src="" alt="" id="imgPreview" class="img-thumbnail d-none" />
+    <img src="newUser.avatar" alt="Image Preview" id="imgPreview" class="img-thumbnail d-none" />
     <p class="text-danger" id="errorInfo"></p>
-    <a class="btn btn-secondary" href="login.html" role="button">Go back</a>
+    <a class="btn btn-secondary" routerLink="/login" role="button">Go back</a>
     <button type="submit" class="btn btn-primary">Create account</button>
   </form>
 </div>
