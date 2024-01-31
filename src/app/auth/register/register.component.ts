@@ -21,17 +21,21 @@ export class RegisterComponent implements OnInit
     newUserEmail: string = '';
       
     async ngOnInit() {
-      this.location = await MyGeolocationService.getLocation();
       this.newUser = {
-        name:'',
-        longitud: this.location.longitude,
-        latitud: this.location.latitude,
+        name: '',
+        longitud: 0,
+        latitud: 0,
         avatar: '', // asignar el valor del avatar aquí
-      email: '', // asignar el valor del email aquí
-      password: '', // asignar el valor de la contraseña aquí
-    
-    };
-    console.log("esta es tu ubicacion ACTUALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL: ", this.location);
+        email: '', // asignar el valor del email aquí
+        password: '', // asignar el valor de la contraseña aquí
+      };
+      this.location = await MyGeolocationService.getLocation();
+      this.newUser.latitud = this.location.latitude;
+      this.newUser.longitud = this.location.longitude;
+      console.log(
+        'esta es tu ubicacion ACTUALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL: ',
+        this.location
+      );
     }
     constructor(private authService: AuthService) {} // Inyecta AuthService aquí
 

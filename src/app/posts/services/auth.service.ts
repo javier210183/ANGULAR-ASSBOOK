@@ -43,7 +43,7 @@ export class AuthService {
   login(data: iLogin ): Observable<void> {
     console.log("AQUI ESTA TU DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",data);
     return this.#http.post<TokenResponse>('auth/login', data).pipe(map(r => {
-      localStorage.setItem("token", r.accesToken);
+      localStorage.setItem("token", r.accessToken);
       console.log("AQUI ESTA TU TOKEN BASURAAAAAAAAAAAAAAAA",localStorage.getItem("token"))
       this.#logged.set(true);
     }))

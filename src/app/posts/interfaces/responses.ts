@@ -9,5 +9,5 @@ export interface SinglePostResponse {
 }
 
 export interface TokenResponse {
-  accesToken : string;
+  accessToken : string;
 }

@@ -6,13 +6,15 @@ import { PostsService } from '../services/posts.service';
 import { CanComponentDeactivate } from '../../interfaces/can-component-deactivate';
 import { Post } from '../interfaces/post';
 import { PostRequiredDirective } from '../validators/post-required.directive';
+import { BmMapDirective } from "../../bingmaps/bm-map.directive";
+import { Coordinates } from '../interfaces/Coordinates';
 
 @Component({
-  selector: 'post-form',
-  standalone: true,
-  imports: [CommonModule, FormsModule, PostRequiredDirective],
-  templateUrl: './post-form.component.html',
-  styleUrl: './post-form.component.css',
+    selector: 'post-form',
+    standalone: true,
+    templateUrl: './post-form.component.html',
+    styleUrl: './post-form.component.css',
+    imports: [CommonModule, FormsModule, PostRequiredDirective, BmMapDirective]
 })
 export class PostFormComponent implements CanComponentDeactivate {
   #router = inject(Router);
@@ -21,7 +23,8 @@ export class PostFormComponent implements CanComponentDeactivate {
   newPost!: Post;
   fileName = '';
   saved = false;
-
+  Coordinates!: Coordinates;//CREADO PARA ENLAZAR EL HTML ,ASIGNADO RELACION CON INTERFAZ AQUI
+  coordinates: Coordinates = { latitude: 38.3245, longitude: -0.5 };
   constructor() {
     this.resetNewPost();
   }

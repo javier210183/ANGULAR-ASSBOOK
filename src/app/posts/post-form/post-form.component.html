@@ -50,7 +50,8 @@
       name="image"
       [(ngModel)]="fileName"
       (change)="changeImage($event)"
-    />
+      
+    /><bm-map [coords]="Coordinates"></bm-map>
   </div>
   @if (newPost.image) {
   <img [src]="newPost.image" alt="" id="imgPreview" class="img-thumbnail" />
