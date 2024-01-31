@@ -9,6 +9,7 @@ import { PostRequiredDirective } from '../validators/post-required.directive';
 import { BmMapDirective } from "../../bingmaps/bm-map.directive";
 import { Coordinates } from '../interfaces/Coordinates';
 import { BmMarkerDirective } from "../../bingmaps/bm-marker.directive";
+import { MyGeolocationService } from '../services/my-geolocation.service';
 
 @Component({
     selector: 'post-form',
@@ -26,11 +27,27 @@ export class PostFormComponent implements CanComponentDeactivate {
   fileName = '';
   saved = false;
   Coordinates!: Coordinates;//CREADO PARA ENLAZAR EL HTML ,ASIGNADO RELACION CON INTERFAZ AQUI
+  location: GeolocationCoordinates | undefined;
   
-  constructor() {
+  constructor(
+    private myGeoLocationService: MyGeolocationService, // Añade esto
+    // ...otros servicios inyectados
+  ) {
     this.resetNewPost();
   }
+  
 
+  ngOnInit() {
+    MyGeolocationService.getLocation().then(coords => {
+      this.coordinates = {
+        latitude: coords.latitude,
+        longitude: coords.longitude
+      };
+    }).catch(error => {
+      console.error('Error al obtener la geolocalización:', error);
+      // Manejar el error aquí, por ejemplo, estableciendo coordenadas predeterminadas
+    });
+  }
   canDeactivate() {
     return (
       this.saved ||
