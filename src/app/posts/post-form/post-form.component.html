@@ -54,6 +54,7 @@
     />
     <bm-map [coords]="coordinates">
       <bm-marker [coords]="coordinates" color="blue"></bm-marker>
+      <bm-autosuggest idContainer="parentSearch" idInput="search" (locationChanged)="moveMap($event)"></bm-autosuggest>
     </bm-map>
   </div>
   @if (newPost.image) {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostsService } from '../services/posts.service';
@@ -10,24 +10,29 @@ import { BmMapDirective } from "../../bingmaps/bm-map.directive";
 import { Coordinates } from '../interfaces/Coordinates';
 import { BmMarkerDirective } from "../../bingmaps/bm-marker.directive";
 import { MyGeolocationService } from '../services/my-geolocation.service';
+import { BmAutosuggestDirective } from "../../bingmaps/bm-autosuggest.directive";
 
 @Component({
     selector: 'post-form',
     standalone: true,
     templateUrl: './post-form.component.html',
     styleUrl: './post-form.component.css',
-    imports: [CommonModule, FormsModule, PostRequiredDirective, BmMapDirective, BmMarkerDirective]
+    imports: [CommonModule, FormsModule, PostRequiredDirective, BmMapDirective, BmMarkerDirective, BmAutosuggestDirective]
 })
 
-export class PostFormComponent implements CanComponentDeactivate {
+export class PostFormComponent implements OnInit, CanComponentDeactivate {
   #router = inject(Router);
   #postsService = inject(PostsService);
-  coordinates: Coordinates = { latitude: 38.3245, longitude: -0.5 };
+  coordinates: Coordinates = { latitude: 38.362968278664205, longitude: -0.4409788881744305 };
   newPost!: Post;
   fileName = '';
   saved = false;
   Coordinates!: Coordinates;//CREADO PARA ENLAZAR EL HTML ,ASIGNADO RELACION CON INTERFAZ AQUI
   location: GeolocationCoordinates | undefined;
+
+  moveMap(coords: Coordinates) {
+    this.coordinates = coords;
+  }
   
   constructor(
     private myGeoLocationService: MyGeolocationService, // Añade esto
@@ -37,6 +42,7 @@ export class PostFormComponent implements CanComponentDeactivate {
   }
   
 
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface 
   ngOnInit() {
     MyGeolocationService.getLocation().then(coords => {
       this.coordinates = {
