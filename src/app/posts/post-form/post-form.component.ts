@@ -29,9 +29,12 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
   saved = false;
   Coordinates!: Coordinates;//CREADO PARA ENLAZAR EL HTML ,ASIGNADO RELACION CON INTERFAZ AQUI
   location: GeolocationCoordinates | undefined;
+  // Añadir postType con un valor inicial que refleje tu preferencia por defecto, por ejemplo, 'photo'
+  postType: string = 'photo'; // 'photo' o 'location' esta variable es la central en lo que se refiere a la geolocation
 
   moveMap(coords: Coordinates) {
     this.coordinates = coords;
+    console.log("LAS COOOOOOOOOORDENADAS  :", this.coordinates);
   }
   
   constructor(
@@ -62,11 +65,20 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   addPost() {
+    if (this.postType === 'photo' && this.newPost.image) {
     this.newPost.mood = +this.newPost.mood;
-    this.#postsService.addPost(this.newPost).subscribe(() => {
-      this.saved = true;
-      this.#router.navigate(['/posts']);
-    });
+    
+  }
+  else if (this.postType === 'location') {
+    this.newPost.latitude = this.coordinates.latitude;
+    this.newPost.longitude = this.coordinates.longitude;
+  
+    this.newPost.image = '';
+  }
+  this.#postsService.addPost(this.newPost).subscribe(() => {
+    this.saved = true;
+    this.#router.navigate(['/posts']);
+  });
   }
 
   resetNewPost() {

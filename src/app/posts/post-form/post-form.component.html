@@ -1,4 +1,4 @@
-<form class="mt-4" (ngSubmit)="addPost()" #postForm="ngForm" postRequired>
+<form class="mt-4" (ngSubmit)="addPost()" #postForm="ngForm">
   <div class="mb-3">
     <label for="title">Title</label>
     <input
@@ -11,16 +11,14 @@
       pattern="^[a-zA-Z][a-zA-Z ]*$"
       [(ngModel)]="newPost.title"
       #titleModel="ngModel"
-      [ngClass]="{
-        'is-invalid': titleModel.touched && !titleModel.valid
-      }"
+      [ngClass]="{'is-invalid': titleModel.touched && !titleModel.valid}"
     />
-    @if(titleModel.errors?.['minlength']) {
-      <div class="invalid-feedback">Title must have at least 5 characters</div>
-    }
-    @if(titleModel.errors?.['pattern']) {
-      <div class="invalid-feedback">Title must contain only letters and spaces</div>
-    }
+    <div *ngIf="titleModel.errors?.['minlength']" class="invalid-feedback">
+      Title must have at least 5 characters
+    </div>
+    <div *ngIf="titleModel.errors?.['pattern']" class="invalid-feedback">
+      Title must contain only letters and spaces
+    </div>
   </div>
   <div class="mb-3">
     <label for="description">Description</label>
@@ -33,61 +31,42 @@
       placeholder="Write something..."
       [(ngModel)]="newPost.description"
       #descModel="ngModel"
-      [ngClass]="{
-        'is-invalid': descModel.touched && !descModel.valid
-      }"
+      [ngClass]="{'is-invalid': descModel.touched && !descModel.valid}"
     ></textarea>
-    @if(descModel.errors?.['minlength']) {
-      <div class="invalid-feedback">Description must have at least 8 characters</div>
-    }
+    <div *ngIf="descModel.errors?.['minlength']" class="invalid-feedback">
+      Description must have at least 8 characters
+    </div>
   </div>
   <div class="mb-3">
+    <input type="radio" name="postType" id="postPhoto" value="photo" [(ngModel)]="postType" checked>
+    <label for="postPhoto">Post Photo</label>
+    <input type="radio" name="postType" id="postLocation" value="location" [(ngModel)]="postType" class="ms-3">
+    <label for="postLocation">Post Location</label>
+  </div>
+  <div *ngIf="postType === 'photo'" class="mb-3">
     <label for="image">Photo</label>
-    <input
-      type="file"
-      class="form-control"
-      id="image"
-      name="image"
-      [(ngModel)]="fileName"
-      (change)="changeImage($event)"
-      
-    />
+    <input type="file" class="form-control" id="image" name="image" (change)="changeImage($event)" />
+    <img *ngIf="newPost.image" [src]="newPost.image" alt="Image preview" id="imgPreview" class="img-thumbnail" />
+  </div>
+  <div [class.d-none]="postType !== 'location'" class="mb-3">
     <bm-map [coords]="coordinates">
       <bm-marker [coords]="coordinates" color="blue"></bm-marker>
       <bm-autosuggest idContainer="parentSearch" idInput="search" (locationChanged)="moveMap($event)"></bm-autosuggest>
     </bm-map>
   </div>
-  @if (newPost.image) {
-  <img [src]="newPost.image" alt="" id="imgPreview" class="img-thumbnail" />
-  }
   <div class="mb-3">
     <label for="mood">Mood</label>
-    <select
-      class="form-select"
-      name="mood"
-      id="mood"
-      [(ngModel)]="newPost.mood"
-    >
+    <select class="form-select" name="mood" id="mood" [(ngModel)]="newPost.mood">
       <option value="0">Neutral</option>
       <option value="1">Happy</option>
       <option value="2">Angry</option>
     </select>
   </div>
-
   <div class="row">
     <div class="col-auto">
-      <button
-        type="submit"
-        class="btn btn-primary btn-lg"
-        [disabled]="postForm.invalid"
-      >
+      <button type="submit" class="btn btn-primary btn-lg" [disabled]="postForm.invalid">
         Create
       </button>
     </div>
-    @if(postForm.touched && postForm.errors?.['postRequired']) {
-      <div class="col my-auto text-danger">
-        The post must have at least a title, a description, or an image
-      </div>
-    }
   </div>
 </form>
