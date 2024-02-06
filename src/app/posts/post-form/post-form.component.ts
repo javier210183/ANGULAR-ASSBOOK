@@ -27,7 +27,6 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
   newPost!: Post;
   fileName = '';
   saved = false;
-  Coordinates!: Coordinates;//CREADO PARA ENLAZAR EL HTML ,ASIGNADO RELACION CON INTERFAZ AQUI
   location: GeolocationCoordinates | undefined;
   // Añadir postType con un valor inicial que refleje tu preferencia por defecto, por ejemplo, 'photo'
   postType: string = 'photo'; // 'photo' o 'location' esta variable es la central en lo que se refiere a la geolocation
@@ -45,17 +44,19 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
   }
   
 
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface 
-  ngOnInit() {
-    MyGeolocationService.getLocation().then(coords => {
+  
+   async ngOnInit() {
+    await MyGeolocationService.getLocation().then(coords => {
       this.coordinates = {
         latitude: coords.latitude,
         longitude: coords.longitude
+        
       };
     }).catch(error => {
       console.error('Error al obtener la geolocalización:', error);
       // Manejar el error aquí, por ejemplo, estableciendo coordenadas predeterminadas
     });
+    console.log("hhhhhooooooooooooooooooollllllllllllllllaaaaaaaaaaaaaaaaaaa",this.coordinates.latitude);
   }
   canDeactivate() {
     return (
@@ -67,18 +68,22 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
   addPost() {
     // Ajustar el mood siempre
     this.newPost.mood = +this.newPost.mood;
-  
+    console.log("este es el postype", this.postType);
     if (this.postType === 'photo' && this.newPost.image) {
       // El usuario ha elegido subir una foto
       // Asegúrate de que solo se envíe la imagen, y limpia los campos de geolocalización
-      delete this.newPost.latitude;
-      delete this.newPost.longitude;
+      delete this.newPost.lat;
+      delete this.newPost.lng;
+    
+      
     } else if (this.postType === 'location') {
+      console.log("HOLA QUE ASE estoy en el elseif del addpost");
       // El usuario ha elegido compartir su ubicación
       // Asegúrate de enviar las coordenadas y limpiar el campo de imagen
-      this.newPost.latitude = this.coordinates.latitude;
-      this.newPost.longitude = this.coordinates.longitude;
+      this.newPost.lat = this.coordinates.latitude;
+      this.newPost.lng = this.coordinates.longitude;
       this.newPost.image = ''; // O también puedes usar delete this.newPost.image;
+      console.log("THIS.COORD.LOCATION   :    ",this.newPost.lng);
     }
   // Mostrar en la consola el objeto newPost que se enviará
   console.log("Enviando post:", this.newPost);

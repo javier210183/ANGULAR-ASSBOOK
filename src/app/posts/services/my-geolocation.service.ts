@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class MyGeolocationService {
 
-    static getLocation(): Promise<GeolocationCoordinates> {
+   static getLocation(): Promise<GeolocationCoordinates> {
         return new Promise<GeolocationCoordinates>((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(
                 pos => {
