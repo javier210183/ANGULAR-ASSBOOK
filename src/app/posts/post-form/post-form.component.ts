@@ -65,21 +65,30 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
   }
 
   addPost() {
-    if (this.postType === 'photo' && this.newPost.image) {
+    // Ajustar el mood siempre
     this.newPost.mood = +this.newPost.mood;
-    
-  }
-  else if (this.postType === 'location') {
-    this.newPost.latitude = this.coordinates.latitude;
-    this.newPost.longitude = this.coordinates.longitude;
   
-    this.newPost.image = '';
+    if (this.postType === 'photo' && this.newPost.image) {
+      // El usuario ha elegido subir una foto
+      // Asegúrate de que solo se envíe la imagen, y limpia los campos de geolocalización
+      delete this.newPost.latitude;
+      delete this.newPost.longitude;
+    } else if (this.postType === 'location') {
+      // El usuario ha elegido compartir su ubicación
+      // Asegúrate de enviar las coordenadas y limpiar el campo de imagen
+      this.newPost.latitude = this.coordinates.latitude;
+      this.newPost.longitude = this.coordinates.longitude;
+      this.newPost.image = ''; // O también puedes usar delete this.newPost.image;
+    }
+  // Mostrar en la consola el objeto newPost que se enviará
+  console.log("Enviando post:", this.newPost);
+    // Envía newPost a tu servicio o backend
+    this.#postsService.addPost(this.newPost).subscribe(() => {
+      this.saved = true;
+      this.#router.navigate(['']);//AQUI VA :this.#router.navigate(['/posts']); SE HA CAMBIADO PARA QUE NO SE ENVIE Y PODER VER QUE SE ESTA MANDANDO AL SERVIDOR.
+    });
   }
-  this.#postsService.addPost(this.newPost).subscribe(() => {
-    this.saved = true;
-    this.#router.navigate(['/posts']);
-  });
-  }
+  
 
   resetNewPost() {
     this.newPost = {

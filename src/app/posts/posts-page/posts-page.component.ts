@@ -30,4 +30,5 @@ export class PostsPageComponent implements OnInit {
   deletePost(post: Post) {
     this.posts = this.posts.filter(p => p.id !== post.id);
   }
+  
 }

@@ -43,17 +43,20 @@
     <input type="radio" name="postType" id="postLocation" value="location" [(ngModel)]="postType" class="ms-3">
     <label for="postLocation">Post Location</label>
   </div>
-  <div *ngIf="postType === 'photo'" class="mb-3">
-    <label for="image">Photo</label>
-    <input type="file" class="form-control" id="image" name="image" (change)="changeImage($event)" />
-    <img *ngIf="newPost.image" [src]="newPost.image" alt="Image preview" id="imgPreview" class="img-thumbnail" />
-  </div>
+  
+@if(postType==="photo"){<div  class="mb-3">
+  <label for="image">Photo</label>
+  <input type="file" class="form-control" id="image" name="image" (change)="changeImage($event)" />
+  <img *ngIf="newPost.image" [src]="newPost.image" alt="Image preview" id="imgPreview" class="img-thumbnail" />
+</div>}
+  @else{<div id="parentSearch"> <input type="text" name="search" id="search"> </div>
   <div [class.d-none]="postType !== 'location'" class="mb-3">
     <bm-map [coords]="coordinates">
       <bm-marker [coords]="coordinates" color="blue"></bm-marker>
       <bm-autosuggest idContainer="parentSearch" idInput="search" (locationChanged)="moveMap($event)"></bm-autosuggest>
     </bm-map>
-  </div>
+  </div>}
+  
   <div class="mb-3">
     <label for="mood">Mood</label>
     <select class="form-select" name="mood" id="mood" [(ngModel)]="newPost.mood">
