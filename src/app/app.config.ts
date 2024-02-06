@@ -5,11 +5,15 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { baseUrlInterceptor } from './interceptors/base-url.interceptor';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { provideBingmapsKey } from './bingmaps/bingmaps.config';
+import { provideGoogleId } from './auth/google-login/google-login.config';
+import { provideFacebookId } from './auth/facebook-login/facebook-login.config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([baseUrlInterceptor,authInterceptor])),
-    provideBingmapsKey('An8JNymYeoGzMUqXfVJlMm_9CLeMcpx_5NB0N1G9cUEUxIadv7XX5zVc008au1N1') //clave de bingmaps
+    provideBingmapsKey('An8JNymYeoGzMUqXfVJlMm_9CLeMcpx_5NB0N1G9cUEUxIadv7XX5zVc008au1N1'), //clave de bingmaps
+    provideGoogleId('746820501392-oalflicqch2kuc12s8rclb5rf7b1fist.apps.googleusercontent.com'),
+    provideFacebookId('PON_TU_ID', 'v18.0'),
   ],
 };

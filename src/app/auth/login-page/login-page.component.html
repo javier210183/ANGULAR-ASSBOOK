@@ -28,4 +28,16 @@
   <p class="text-danger"></p>
   <button type="submit" class="btn btn-primary">Login</button>
   <button type="submit" class="btn btn-primary" (click)="register()">Register</button>
+  <div class="mb-3"><div googleLogin class="btn"></div><button
+  fbLogin
+  [scopes]="['email', 'public_profile']"
+  class="btn btn-primary"
+  (loginOk)="loggedFacebook($event)"
+  (loginError)="showError($event)"
+>
+  <fa-icon [icon]="iconFacebook"></fa-icon>
+  Login con Facebook
+</button>
+</div>
+  
 </form>

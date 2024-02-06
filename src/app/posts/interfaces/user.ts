@@ -13,3 +13,8 @@ export interface iLogin {
   latitud?: number;
   longitud?: number;
 }
+export interface TokenLogin {
+  token:string;
+  lat?: number;
+  lng?: number;
+}

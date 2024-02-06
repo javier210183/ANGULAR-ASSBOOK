@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
-import { UserLogin, iLogin } from '../interfaces/user';
+import { TokenLogin, UserLogin, iLogin } from '../interfaces/user';
 import { TokenResponse } from '../interfaces/responses';
 
 @Injectable({
@@ -43,6 +43,22 @@ export class AuthService {
   login(data: iLogin ): Observable<void> {
     console.log("AQUI ESTA TU DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",data);
     return this.#http.post<TokenResponse>('auth/login', data).pipe(map(r => {
+      localStorage.setItem("token", r.accessToken);
+      console.log("AQUI ESTA TU TOKEN BASURAAAAAAAAAAAAAAAA",localStorage.getItem("token"))
+      this.#logged.set(true);
+    }))
+  }
+  loginGoogle(data: TokenLogin ): Observable<void> {
+    console.log("AQUI ESTA TU DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",data);
+    return this.#http.post<TokenResponse>('auth/google', data).pipe(map(r => {
+      localStorage.setItem("token", r.accessToken);
+      console.log("AQUI ESTA TU TOKEN BASURAAAAAAAAAAAAAAAA",localStorage.getItem("token"))
+      this.#logged.set(true);
+    }))
+  }
+  loginFacebook(data: TokenLogin ): Observable<void> {
+    console.log("AQUI ESTA TU DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",data);
+    return this.#http.post<TokenResponse>('auth/facebook', data).pipe(map(r => {
       localStorage.setItem("token", r.accessToken);
       console.log("AQUI ESTA TU TOKEN BASURAAAAAAAAAAAAAAAA",localStorage.getItem("token"))
       this.#logged.set(true);

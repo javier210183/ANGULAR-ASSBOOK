@@ -3,7 +3,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": ["bingmaps"]
+    "types": ["bingmaps","google.accounts","facebook-js-sdk"]
   },
   "files": [
     "src/main.ts"
