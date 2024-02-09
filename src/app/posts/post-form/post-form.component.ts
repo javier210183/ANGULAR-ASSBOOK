@@ -90,7 +90,7 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
     // Envía newPost a tu servicio o backend
     this.#postsService.addPost(this.newPost).subscribe(() => {
       this.saved = true;
-      this.#router.navigate(['']);//AQUI VA :this.#router.navigate(['/posts']); SE HA CAMBIADO PARA QUE NO SE ENVIE Y PODER VER QUE SE ESTA MANDANDO AL SERVIDOR.
+      this.#router.navigate(['/posts']);//AQUI VA :this.#router.navigate(['/posts']); SE HA CAMBIADO PARA QUE NO SE ENVIE Y PODER VER QUE SE ESTA MANDANDO AL SERVIDOR.
     });
   }
   

@@ -85,6 +85,10 @@ export class AuthService {
     })
   );
 }
-
+isAuthenticated(): boolean {
+  const token = localStorage.getItem('token');
+ //creado para guardian , saber si esta autenticado  y darle permisoso para ver las diferentes partes de la web
+  return !!token;
+}
   
 }

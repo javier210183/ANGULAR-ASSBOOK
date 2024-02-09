@@ -10,7 +10,7 @@ export const logoutActivateGuardGuard: CanActivateFn = () => {
     map(isLoggedIn => {
       if (isLoggedIn) {
         // Si el usuario no está autenticado, redirige a la página de login
-        return router.createUrlTree(['/post']);
+        return router.createUrlTree(['/posts']);
       }
       // Si el usuario está autenticado, permite el acceso
       return true;

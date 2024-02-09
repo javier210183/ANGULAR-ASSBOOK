@@ -14,6 +14,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([baseUrlInterceptor,authInterceptor])),
     provideBingmapsKey('An8JNymYeoGzMUqXfVJlMm_9CLeMcpx_5NB0N1G9cUEUxIadv7XX5zVc008au1N1'), //clave de bingmaps
     provideGoogleId('746820501392-oalflicqch2kuc12s8rclb5rf7b1fist.apps.googleusercontent.com'),
-    provideFacebookId('PON_TU_ID', 'v18.0'),
+    provideFacebookId('433124529051653', 'v18.0'),
   ],
 };
