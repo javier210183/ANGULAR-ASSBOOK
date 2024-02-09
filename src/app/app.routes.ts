@@ -23,6 +23,10 @@ export const routes: Routes = [
     path: '**',
     redirectTo: '/auth/login',
   },
-  
+  {
+    path: 'profile',
+    canActivate:[loginActivateGuardGuard],
+    loadChildren: () => import('./auth/profile/profile.module').then(m => m.ProfileModule),
+  },
 
 ];

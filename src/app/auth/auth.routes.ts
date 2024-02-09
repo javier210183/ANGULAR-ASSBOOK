@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 import { LoginPageComponent } from "./login-page/login-page.component";
 import { RegisterComponent } from "./register/register.component";
-import { ProfileComponent } from "../profile/profile.component";
+import { ProfileComponent } from "./profile/profile.component";
 import { loginActivateGuardGuard } from "../login-activate-guard.guard";
 
 
