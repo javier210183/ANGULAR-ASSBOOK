@@ -1,10 +1,11 @@
 export interface UserLogin {
+
   name:string;
   avatar: string;
   email: string;
   password: string;
-  latitud?: number;
-  longitud?: number;
+  lat: number;
+  lng: number;
 }
 export interface iLogin {
   

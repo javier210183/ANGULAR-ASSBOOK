@@ -23,15 +23,15 @@ export class RegisterComponent implements OnInit
     async ngOnInit() {
       this.newUser = {
         name: '',
-        longitud: 0,
-        latitud: 0,
+        lng: 0,
+        lat: 0,
         avatar: '', // asignar el valor del avatar aquí
         email: '', // asignar el valor del email aquí
         password: '', // asignar el valor de la contraseña aquí
       };
       this.location = await MyGeolocationService.getLocation();
-      this.newUser.latitud = this.location.latitude;
-      this.newUser.longitud = this.location.longitude;
+      this.newUser.lat = this.location.latitude;
+      this.newUser.lng = this.location.longitude;
       console.log(
         'esta es tu ubicacion ACTUALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL: ',
         this.location

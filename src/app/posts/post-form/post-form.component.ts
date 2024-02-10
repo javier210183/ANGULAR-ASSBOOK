@@ -36,6 +36,7 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
     console.log("LAS COOOOOOOOOORDENADAS  :", this.coordinates);
   }
   
+  
   constructor(
     private myGeoLocationService: MyGeolocationService, // Añade esto
     // ...otros servicios inyectados

@@ -1,68 +1,61 @@
-
-
-  <body>
-    
-    
-
-    <div class="container">
-      <div class="row mt-4" id="profile">
-        <div class="col-3">
-          <div>
-            <img class="w-100" id="avatar" src="" alt="" />
-            <label class="btn btn-sm btn-danger">
-              <i class="fa-regular fa-image"></i>
-              <input type="file" id="avatarInput" class="d-none" />
-            </label>
-          </div>
-        </div>
-
-        <div class="col-9" id="profileInfo">
-          <!--  Cambiar h4 por inputs con un botón -->
-          <h4 id="name">User name</h4>
-          <h4 id="email">
-            <small class="text-muted">email</small>
-          </h4>
-          <!-- Añadir campo de modificar password que muestre 2 campos -->
-          <div>
-            <button class="btn btn-primary" id="editProfile">
-              <i class="fa-regular fa-pen-to-square"></i>
-              Edit profile
-            </button>
-            <button class="btn btn-success" id="editPassword">
-              <i class="fa-solid fa-lock"></i>
-              Edit password
-            </button>
-          </div>
-        </div>
-
-        <div class="col-9 d-none" id="profileForm">
-          <form>
-            <div class="mb-3">
-              <label for="email">Email:</label>
-              <input type="email" class="form-control" name="email" id="email" placeholder="Email" />
-              <label for="name">Name:</label>
-              <input type="text" class="form-control" name="name" id="name" placeholder="Name" />
-            </div>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-            <button type="button" class="btn btn-danger" id="cancelEditProfile">Cancel</button>
-          </form>
-        </div>
-
-        <div class="col-9 d-none" id="passwordForm">
-          <form>
-            <div class="mb-3">
-              <label for="password">Password:</label>
-              <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
-              <label for="password2">Repeat password:</label>
-              <input type="password" class="form-control" name="password2" id="password2" placeholder="Repeat password" />
-            </div>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-            <button type="button" class="btn btn-danger" id="cancelEditPassword">Cancel</button>
-          </form>
+<body>
+  <div class="container">
+    <div class="row mt-4" id="profile">
+      <div class="col-3">
+        <div>
+          <img class="w-100" [src]="avatarUrl" alt="Profile Avatar" />
+          <label class="btn btn-sm btn-danger">
+            <i class="fa-regular fa-image"></i>
+            <input type="file" id="avatarInput" class="d-none" (change)="changeAvatar($event)" />
+          </label>
         </div>
       </div>
-      <div class="mt-4" id="map"></div>
+        <!-- Botones -->
+        <div class="col-9" id="profileInfo">
+          <h4 id="name">{{ name }}</h4>
+          <h4 id="email"><small class="text-muted">{{ email }}</small></h4>
+          <div>
+            <button class="btn btn-primary" (click)="showEditProfileForm = true">
+              <i class="fa-regular fa-pen-to-square"></i> Edit profile
+            </button>
+            <button class="btn btn-success" (click)="showEditPasswordForm = true">
+              <i class="fa-solid fa-lock"></i> Edit password
+            </button>
+          </div>
+        </div>
+  
+       <!-- Formulario de Edición de Perfil -->
+<div *ngIf="showEditProfileForm" class="col-9">
+  <form (ngSubmit)="updateUserProfile()">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" [(ngModel)]="updatedEmail" name="email" placeholder="Enter new email">
     </div>
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="updatedName" name="name" placeholder="Enter new name">
+    </div>
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="button" class="btn btn-danger" (click)="showEditProfileForm = false">Cancel</button>
+  </form>
+</div>
+
+<!-- Formulario de Cambio de Contraseña -->
+<div *ngIf="showEditPasswordForm" class="col-9">
+  <form (ngSubmit)="changeUserPassword()">
+    <div class="form-group">
+      <label for="currentPassword">Current Password:</label>
+      <input type="password" class="form-control" id="currentPassword" [(ngModel)]="currentPassword" name="currentPassword" placeholder="Enter current password">
+    </div>
+    <div class="form-group">
+      <label for="newPassword">New Password:</label>
+      <input type="password" class="form-control" id="newPassword" [(ngModel)]="newPassword" name="newPassword" placeholder="Enter new password">
+    </div>
+    <button type="submit" class="btn btn-primary">Change password</button>
+    <button type="button" class="btn btn-danger" (click)="showEditPasswordForm = false">Cancel</button>
+  </form>
+</div>
+      <!-- ... -->
+      <bm-map [coords]="coordinates"></bm-map>
+    </div></div>
   </body>
-
-

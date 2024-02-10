@@ -37,6 +37,7 @@ export class AuthService {
   get logged() {
     return this.#logged.asReadonly(); // Señal de solo lectura
   }
+
 //cuando se pulsa el boton de login , hay que invocar este metodopasandole el usuario(interfaz)password y coordenada y subscribirme
   login(data: iLogin ): Observable<void> {
     console.log("AQUI ESTA TU DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",data);
@@ -103,4 +104,24 @@ getProfile(): Observable<UserLogin> {
     })
   });
 }
+// Actualizar perfil
+updateProfile(data: { name: string; email: string }): Observable<UserLogin> {
+  return this.#http.post<UserLogin>('user/update-profile', data);
 }
+
+// Cambiar contraseña
+changePassword(data: { currentPassword: string; newPassword: string }): Observable<any> {
+  return this.#http.post('user/change-password', data);
+}
+// Actualizar avatar
+updateAvatar(file: File): Observable<UserLogin> {
+  const formData = new FormData();
+  formData.append('avatar', file);
+  return this.#http.post<UserLogin>('user/avatar', formData);
+}
+    
+  }
+
+
+
+
