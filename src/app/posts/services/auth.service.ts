@@ -106,12 +106,12 @@ getProfile(): Observable<UserLogin> {
 }
 // Actualizar perfil
 updateProfile(data: { name: string; email: string }): Observable<UserLogin> {
-  return this.#http.post<UserLogin>('user/update-profile', data);
+  return this.#http.post<UserLogin>('user/profile', data);
 }
 
 // Cambiar contraseña
 changePassword(data: { currentPassword: string; newPassword: string }): Observable<any> {
-  return this.#http.post('user/change-password', data);
+  return this.#http.post('user/password', data);
 }
 // Actualizar avatar
 updateAvatar(file: File): Observable<UserLogin> {
