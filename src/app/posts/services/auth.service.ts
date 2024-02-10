@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
 import { TokenLogin, UserLogin, iLogin } from '../interfaces/user';
@@ -27,10 +27,8 @@ export class AuthService {
       }
     }
     return of(true);
+    
 }
-    
-    
-  
 
   #logged = signal(false);
   #http = inject(HttpClient);
@@ -72,7 +70,7 @@ export class AuthService {
   // Método para registrar un nuevo usuario
  register(data: UserLogin): Observable<unknown> {
   // Aquí se coloca el console.log para ver el objeto enviado
-  console.log("Datos enviados al servidor PERRRRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:", data);
+  console.log("Datos enviados al servidor PERAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:", data);
 
   return this.#http.post<unknown>('auth/register', data).pipe(
     map(response => {
@@ -90,5 +88,19 @@ isAuthenticated(): boolean {
  //creado para guardian , saber si esta autenticado  y darle permisoso para ver las diferentes partes de la web
   return !!token;
 }
-  
+getProfile(): Observable<UserLogin> {
+  // Asumiendo que la URL base es la misma que se usa para el login, solo cambia el endpoint final.
+  const url = 'users/me'; 
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    throw new Error('No autenticado');
+  }
+
+  return this.#http.get<UserLogin>(url, {
+    headers: new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+  });
+}
 }
