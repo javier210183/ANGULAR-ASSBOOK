@@ -111,16 +111,12 @@ updateProfile(data: { name: string; email: string }): Observable<UserLogin> {
 }
 
 
-// En tu servicio Angular AuthService
-changePassword(data: { currentPassword: string; newPassword: string }): Observable<any> {
-  // Asegúrate de que los campos que envías coinciden con los del backend
-  const body = {
-    oldPassword: data.currentPassword, // Si el backend espera "oldPassword" en lugar de "currentPassword"
-    newPassword: data.newPassword
-  };
-
-  return this.#http.put('users/me/password', body);
+changePassword(data: { oldPassword: string, newPassword: string }): Observable<any> {
+  return this.#http.put('users/me/password', data);
 }
+
+
+
 // Actualizar el avatar del usuario
 updateAvatar(file: File): Observable<any> {
   const formData = new FormData();

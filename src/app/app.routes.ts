@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { logoutActivateGuardGuard } from './guards/logout-activate-guard.guard';
 import { loginActivateGuardGuard } from './guards/login-activate-guard.guard';
 
+
 export const routes: Routes = [
   {
     path: 'auth',
@@ -30,4 +31,5 @@ export const routes: Routes = [
     path: '**',
     redirectTo: '/auth/login',
   },
+  
 ];

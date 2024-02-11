@@ -115,16 +115,23 @@ updateUserProfile(): void {
   });
 }
 
-// Cambio de Contraseña
 changeUserPassword(): void {
-  // Asume que currentPassword y newPassword son propiedades en tu componente vinculadas a los inputs del formulario
-  this.authService.changePassword({ currentPassword: this.currentPassword, newPassword: this.newPassword }).subscribe({
+  const data = {
+    oldPassword: this.currentPassword,
+    newPassword: this.newPassword
+  };
+
+  this.authService.changePassword(data).subscribe({
     next: () => {
-      this.showEditPasswordForm = false; // Oculta el formulario después de la actualización
       console.log('Password changed successfully');
+      // Resto de tu lógica de éxito
     },
-    error: (error) => console.error('Error changing password', error)
+    error: (error) => {
+      console.error('Error changing password', error);
+      // Resto de tu lógica de error
+    }
   });
 }
+
 
 }

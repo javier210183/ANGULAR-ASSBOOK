@@ -7,8 +7,20 @@
     }"
     [post]="post"
     (deleted)="goBack()"
-  />
+  ></post-card>
 </div>
 <div class="mt-4 mb-4">
   <button class="btn btn-success" (click)="goBack()">Go back</button>
+</div>
+
+<div class="comments-section">
+  <h3>Comments</h3>
+  <div *ngFor="let comment of comments">
+    <p>{{ comment.text }}</p>
+    <small>— {{ comment.user.name }}</small>
+  </div>
+</div>
+<div class="add-comment-form">
+  <textarea [(ngModel)]="newCommentText" placeholder="Add a comment..."></textarea>
+  <button (click)="addComment()">Post Comment</button>
 </div>
