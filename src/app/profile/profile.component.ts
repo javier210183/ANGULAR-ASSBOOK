@@ -60,6 +60,7 @@ export class ProfileComponent implements OnInit,OnDestroy {
         console.log("TU NOMBRE : ", this.name);
         console.log("TU EMAIL : ", this.email);
         console.log("URL del avatar:", this.avatarUrl);
+        console.log("ESTE ES TU USUARIOOOOOO   : ",response.user);
       },
       error: (error) => console.error('Error obtaining user profile:', error),
     });
@@ -92,8 +93,15 @@ changeAvatar(event: Event): void {
   const element = event.target as HTMLInputElement;
   if (element.files && element.files.length > 0) {
     const file = element.files[0];
-    this.authService.updateAvatar(file).subscribe({
+    const reader = new FileReader();
+          reader.onload = () => {
+            this.avatarUrl = reader.result as string; // Asume formato Base64
+          };
+          reader.readAsDataURL(file);
+    console.log("ESTE ES TU AVATARURL :",this.avatarUrl);
+    this.authService.updateAvatar({avatar : this.avatarUrl}).subscribe({
       next: (user) => {
+        console.log(" HE CAMBIADO EL AVATAR Y ME DEVUELVE :", user);
         // Actualizar la UI con el nuevo avatar
         this.avatarUrl = user.avatar;
       },
@@ -117,13 +125,14 @@ updateUserProfile(): void {
 
 changeUserPassword(): void {
   const data = {
-    oldPassword: this.currentPassword,
-    newPassword: this.newPassword
+    
+    password: this.newPassword
   };
 
   this.authService.changePassword(data).subscribe({
-    next: () => {
+    next: (response : any) => {
       console.log('Password changed successfully');
+      console.log("este es tu response :",response);
       // Resto de tu lógica de éxito
     },
     error: (error) => {

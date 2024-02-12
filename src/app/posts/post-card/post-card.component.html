@@ -12,7 +12,7 @@
       <img src="./assets/img/avatar.png" alt="" class="rounded-circle" />
     </div>
     <div class="col">
-      <div class="name">Bad guy</div>
+      <div class="name">{{ 'Bad guy' }}</div>
       <div>
         <small class="text-muted">{{
           post.date | date : "MM/dd/yyy hh:mm a"
@@ -37,6 +37,7 @@
         (click)="toggleDislike(post)"
         aria-hidden="true"
       ></i>
+      <span class="likes-count">{{ post.totalLikes }} likes</span>
     </div>
   </div>
 </div>

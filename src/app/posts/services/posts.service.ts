@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
-import { Post } from '../interfaces/post';
-import { PostsResponse, SinglePostResponse } from '../interfaces/responses';
-
+import { Observable, map } from "rxjs";
+import { PostsResponse, SinglePostResponse } from "../interfaces/responses";
+import { HttpClient } from "@angular/common/http";
+import { Injectable, inject } from "@angular/core";
+import { Post } from "../interfaces/post";
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +10,7 @@ import { PostsResponse, SinglePostResponse } from '../interfaces/responses';
 export class PostsService {
   #postsUrl = 'posts';
   #http = inject(HttpClient);
+  
 
   getPosts(): Observable<Post[]> {
     return this.#http
@@ -34,11 +34,19 @@ export class PostsService {
     return this.#http.delete<void>(`${this.#postsUrl}/${id}`);
   }
 
-  addVote(id: number, likes: boolean): Observable<void> {
-    return this.#http.post<void>(`${this.#postsUrl}/${id}/likes`, { likes });
-  }
+  
+addVote(postId: number, likes: boolean): Observable<{ totalLikes: number }> {
+  return this.#http.post<{ totalLikes: number }>(`${this.#postsUrl}/${postId}/likes`, { likes });
+}
+
+
 
   deleteVote(id: number) {
     return this.#http.delete<void>(`${this.#postsUrl}/${id}/likes`);
+  }
+  getComments(id:number){
+    return this.#http
+      .get<SinglePostResponse>(`${this.#postsUrl}/${id}/comments`);
+       
   }
 }

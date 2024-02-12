@@ -17,7 +17,7 @@ export class PostCardComponent {
 
   #postsService = inject(PostsService);
   #router = inject(Router);
-
+  totalLikes!: number;
   toggleLike(post: Post) {
     if (!post.likes) this.addVote(true);
     else this.deleteVote();
@@ -29,12 +29,23 @@ export class PostCardComponent {
   }
 
   addVote(likes: boolean) {
-    const oldVote = this.post.likes;
-    this.post.likes = likes;
-    this.#postsService
-      .addVote(this.post.id!, likes)
-      .subscribe({ error: () => (this.post.likes = oldVote) });
+    const postId = this.post.id!;
+    console.log("Votando: ", likes ? "Like" : "Dislike", " en el post ID:", postId);
+  
+    this.#postsService.addVote(postId, likes).subscribe({
+      next: (response) => {
+        console.log("Respuesta del servidor al votar: ", response);
+        // Asumiendo que la respuesta del servidor incluye el nuevo total de likes
+        this.post.totalLikes = response.totalLikes; // Actualiza el total de likes en el modelo
+        console.log("Total de likes actualizado: ", this.post.totalLikes);
+      },
+      error: (error) => {
+        console.error("Error al votar: ", error);
+        // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
+      }
+    });
   }
+  
 
   deleteVote() {
     const oldVote = this.post.likes;

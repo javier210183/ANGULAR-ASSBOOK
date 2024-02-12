@@ -103,6 +103,7 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
       image: '',
       mood: 0,
       likes: null,
+      totalLikes: 0, 
     };
   }
 

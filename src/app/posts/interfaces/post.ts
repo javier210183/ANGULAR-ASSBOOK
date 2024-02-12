@@ -1,4 +1,5 @@
 export interface Post {
+  totalLikes: any;
   id?: number;
   title?: string;
   description?: string;

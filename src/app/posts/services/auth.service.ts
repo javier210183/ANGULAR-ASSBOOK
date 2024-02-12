@@ -111,18 +111,20 @@ updateProfile(data: { name: string; email: string }): Observable<UserLogin> {
 }
 
 
-changePassword(data: { oldPassword: string, newPassword: string }): Observable<any> {
+changePassword(data: {  password: string }): Observable<any> {
+  console.log("VOY A ENVIAR EL DATA :",data);
   return this.#http.put('users/me/password', data);
 }
 
 
 
 // Actualizar el avatar del usuario
-updateAvatar(file: File): Observable<any> {
-  const formData = new FormData();
-  formData.append('avatar', file);
+updateAvatar(data: {  avatar: string}): Observable<any> {
+  //const formData = new FormData();
+  //formData.append('avatar', file);
+  console.log("VOY A ENVIAR EL AVATA :", data);
 
-  return this.#http.put('users/me/avatar', formData);
+  return this.#http.put('users/me/avatar', data);
 }
     
   }

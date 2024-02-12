@@ -28,7 +28,7 @@ export class PostDetailComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private postDetailService: PostDetailService,
-    private router: Router // Aquí lo inyectas a través del constructor
+    private router: Router // Aquí lo inyecto a través del constructor
   ) {}
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -43,22 +43,81 @@ export class PostDetailComponent implements OnInit{
   loadPost(postId: number): void {
     this.postDetailService.getPostDetails(postId).subscribe(post => {
       this.post = post;
+      console.log("EL POOOOST  : DE LOADPOST : ",post);
     });
   }
 
   loadComments(postId: number): void {
-    this.postDetailService.getComments(postId).subscribe(comments => {
-      this.comments = comments;
+    this.postDetailService.getComments(postId).subscribe({
+      next: (comments) => {
+        console.log(" HE  PEDIDO los comments Y ME DEVUELVE :", comments);
+        // Actualizar la UI con el nuevo avatar
+        this.comments = comments;
+      },
+      error: (error) => console.error(' ERROR R R R Rgetting comments', error)
     });
   }
 
   addComment(): void {
     if (this.newCommentText.trim()) {
       this.postDetailService.addComment(this.post.id!, this.newCommentText)
-        .subscribe(comment => {
-          this.comments.push(comment);
-          this.newCommentText = ''; // Limpiar el input después de enviar
+        .subscribe({
+          next: (comment) => {
+            console.log(" HE  añadido un comentario y me d Y ME DEVUELVE :", comment);
+            // Actualizar la UI con el nuevo avatar
+            this.comments.push(comment);
+          },
+          error: (error) => console.error(' ERROR R R R Rgetting comments', error)
         });
+    }
+  }
+  addVote(likes: boolean): void {
+    const oldVote = this.post.likes;
+    const oldLikesCount = this.post.totalLikes;
+
+    // Llamar al servicio para añadir un voto
+    this.postDetailService.addVote(this.post.id!, likes).subscribe({
+      next: (response) => {
+        this.post.totalLikes = response.totalLikes;
+        this.post.likes = likes; // Actualiza el estado del 'like'
+      },
+      error: () => {
+        this.post.likes = oldVote; // Revertir si hay error
+        this.post.totalLikes = oldLikesCount; // Revertir si hay error
+      }
+    });
+  }
+
+  deleteVote(): void {
+    const oldVote = this.post.likes;
+    const oldLikesCount = this.post.totalLikes;
+
+    // Llamar al servicio para borrar un voto
+    this.postDetailService.deleteVote(this.post.id!).subscribe({
+      next: (response) => {
+        this.post.totalLikes = response.totalLikes;
+        this.post.likes = null; // Actualiza el estado del 'like'
+      },
+      error: () => {
+        this.post.likes = oldVote; // Revertir si hay error
+        this.post.totalLikes = oldLikesCount; // Revertir si hay error
+      }
+    });
+  }
+
+  toggleLike(): void {
+    if (this.post.likes === true) {
+      this.deleteVote();
+    } else {
+      this.addVote(true);
+    }
+  }
+
+  toggleDislike(): void {
+    if (this.post.likes === false) {
+      this.deleteVote();
+    } else {
+      this.addVote(false);
     }
   }
   

@@ -8,6 +8,18 @@
     [post]="post"
     (deleted)="goBack()"
   ></post-card>
+  <div class="like-dislike-buttons">
+    <i class="fa-regular fa-thumbs-up"
+       [ngClass]="{'text-primary': post.likes === true}"
+       (click)="toggleLike()"
+       aria-hidden="true"></i>
+       
+    <i class="fa-regular fa-thumbs-down"
+       [ngClass]="{'text-danger': post.likes === false}"
+       (click)="toggleDislike()"
+       aria-hidden="true"></i>
+    <span class="likes-count">{{ post.totalLikes }} likes</span>
+  </div>
 </div>
 <div class="mt-4 mb-4">
   <button class="btn btn-success" (click)="goBack()">Go back</button>
