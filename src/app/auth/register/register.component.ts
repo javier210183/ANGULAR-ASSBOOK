@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit
           reader.readAsDataURL(file);
         }
         registerUser() {
-          // Opcional: Verificar que los emails coinciden antes de proceder
+   
           if (this.newUser.email !== this.newUserEmail) {
             console.error('Los emails no coinciden.');
             console.log('Email:', this.newUser.email);

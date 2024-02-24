@@ -90,7 +90,7 @@ isAuthenticated(): boolean {
   return !!token;
 }
 getProfile(): Observable<UserLogin> {
-  // Asumiendo que la URL base es la misma que se usa para el login, solo cambia el endpoint final.
+ 
   const url = 'users/me'; 
   const token = localStorage.getItem('token');
 

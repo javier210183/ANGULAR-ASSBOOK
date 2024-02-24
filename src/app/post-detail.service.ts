@@ -24,11 +24,11 @@ export class PostDetailService {
     return this.http.post<Comment>(`${this.#postsUrl}/${postId}/comments`, { text: commentText });
   }
   addVote(postId: number, likes: boolean): Observable<{ totalLikes: number }> {
-    // Asegúrate de que la URL y el cuerpo de la petición sean correctos.
+    
     return this.http.post<{ totalLikes: number }>(`${this.#postsUrl}/${postId}/likes`, { likes });
   }
   deleteVote(postId: number): Observable<{ totalLikes: number }> {
-    // Asegúrate de que la URL sea correcta.
+    
     return this.http.delete<{ totalLikes: number }>(`${this.#postsUrl}/${postId}/likes`);
   }
 }

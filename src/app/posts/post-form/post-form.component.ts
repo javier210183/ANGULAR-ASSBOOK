@@ -72,7 +72,7 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
     console.log("este es el postype", this.postType);
     if (this.postType === 'photo' && this.newPost.image) {
       // El usuario ha elegido subir una foto
-      // Asegúrate de que solo se envíe la imagen, y limpia los campos de geolocalización
+      
       delete this.newPost.lat;
       delete this.newPost.lng;
     
@@ -80,15 +80,15 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
     } else if (this.postType === 'location') {
       console.log("HOLA QUE ASE estoy en el elseif del addpost");
       // El usuario ha elegido compartir su ubicación
-      // Asegúrate de enviar las coordenadas y limpiar el campo de imagen
+      
       this.newPost.lat = this.coordinates.latitude;
       this.newPost.lng = this.coordinates.longitude;
-      this.newPost.image = ''; // O también puedes usar delete this.newPost.image;
+      this.newPost.image = ''; // O también se puede usar delete this.newPost.image;
       console.log("THIS.COORD.LOCATION   :    ",this.newPost.lng);
     }
   // Mostrar en la consola el objeto newPost que se enviará
   console.log("Enviando post:", this.newPost);
-    // Envía newPost a tu servicio o backend
+    // Envía newPost a servicio o backend
     this.#postsService.addPost(this.newPost).subscribe(() => {
       this.saved = true;
       this.#router.navigate(['/posts']);//AQUI VA :this.#router.navigate(['/posts']); SE HA CAMBIADO PARA QUE NO SE ENVIE Y PODER VER QUE SE ESTA MANDANDO AL SERVIDOR.

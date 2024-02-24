@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from './../posts/services/auth.service'; // Ajusta la ruta según tu estructura de carpetas
+import { AuthService } from './../posts/services/auth.service'; 
 import { UserLogin } from '../posts/interfaces/user';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Coordinates } from '../posts/interfaces/Coordinates';
@@ -9,7 +9,7 @@ import { BmMarkerDirective } from '../bingmaps/bm-marker.directive';
 import { BmAutosuggestDirective } from '../bingmaps/bm-autosuggest.directive';
 
 @Component({
-  selector: 'app-profile', // Asegúrate de que el selector sea único y siga las convenciones de nomenclatura
+  selector: 'app-profile', 
   standalone: true,
   imports: [CommonModule,FormsModule,BmMapDirective,BmMarkerDirective,BmAutosuggestDirective,ReactiveFormsModule],
   templateUrl: './profile.component.html',

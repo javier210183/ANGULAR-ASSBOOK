@@ -1,4 +1,4 @@
-import { Component, inject,} from '@angular/core';
+import { Component, computed, inject,} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../posts/services/auth.service';
@@ -11,11 +11,15 @@ import { AuthService } from '../posts/services/auth.service';
   styleUrl: './top-menu.component.css'
 })
 export class TopMenuComponent {
+  [x: string]: any;
   title = 'AssBook';
   #authService = inject(AuthService);
   #router = inject(Router);
-  logout(){this.#authService.logout();
+  logged = computed(() => this.#authService.logged());
+  logout()
+  {this.#authService.logout();
     this.#router.navigate(['/auth/login']);
     
   }
+  
 }
