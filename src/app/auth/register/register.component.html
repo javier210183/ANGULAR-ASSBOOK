@@ -98,7 +98,7 @@
     </div>
     <img [src]="newUser.avatar" alt="Image Preview" id="imgPreview" class="img-thumbnail d-none" />
     <p class="text-danger" id="errorInfo"></p>
-    <a class="btn btn-secondary" routerLink="/login" role="button">Go back</a>
+    <button type="button" class="btn btn-secondary" (click)="goBack()">Go back</button>
     <button type="submit" class="btn btn-primary">Create account</button>
   </form>
 </div>

@@ -9,13 +9,15 @@ import { LoadGoogleApiService } from '../google-login/load-google-api.service';
 import { Subscription } from 'rxjs';
 import { GoogleLoginDirective } from '../google-login/google-login.directive';
 import { FbLoginDirective } from '../facebook-login/fb-login.directive';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import Swal from 'sweetalert2';
 
 
 
 @Component({
   selector: 'login-page',
   standalone: true,
-  imports: [CommonModule, FormsModule,GoogleLoginDirective,FbLoginDirective],
+  imports: [CommonModule, FormsModule,GoogleLoginDirective,FbLoginDirective,SweetAlert2Module],
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css'] // Asegúrate de que la propiedad se llame styleUrls en plural
 })
@@ -29,7 +31,7 @@ password='';
 #loadGoogle = inject(LoadGoogleApiService);
 credentialsSub!: Subscription;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,) {}
   async ngOnInit(): Promise<void> {
     this.location=await MyGeolocationService.getLocation();
     this.credentialsSub = this.#loadGoogle.credential$.subscribe(
@@ -48,19 +50,29 @@ credentialsSub!: Subscription;
   }
   
 //SALTA LA PAG 34 AL INTENTAR HACER LOGIN
-  login() {
-    const LoginData: iLogin = {
-    email:this.email, // Inicializa con valores vacíos o los que correspondan
-    password:this.password,
-    latitud :this.location.longitude,
-    longitud:this.location.longitude,
-  };
-    console.log("Intentando iniciar sesión con:", LoginData);
+    login() {
+      const LoginData: iLogin = {
+        email: this.email,
+        password: this.password,
+        latitud: this.location.latitude,
+        longitud: this.location.longitude,
+      };
 
-    this.#authService
-      .login(LoginData)
-      .subscribe(() => this.#router.navigate(['/posts']));
-  }
+      console.log("Intentando iniciar sesión con:", LoginData);
+
+      this.#authService.login(LoginData).subscribe({
+        next: () => {
+          // Navegación a posts si el login es exitoso
+          this.#router.navigate(['/posts']);
+        },
+        error: (error) => {
+          
+          // El mensaje de error se obtiene del objeto de respuesta del error HTTP
+          const message = error.error?.message || 'Error desconocido al intentar iniciar sesión.';
+          this.showError(message);
+        }
+      });
+    }
 
   register() {
     this.router.navigate(['/auth/register']); // Usa this.router para navegar
@@ -72,8 +84,14 @@ credentialsSub!: Subscription;
     ;
   }
 
-  showError(error: any) {
-    console.error(error);
+  showError(message: string) {
+    console.error(message);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: message,
+    });
   }
+  
 
 }
