@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { TokenLogin, UserLogin, iLogin } from '../interfaces/user';
 import { TokenResponse } from '../interfaces/responses';
 
@@ -68,22 +68,20 @@ export class AuthService {
     localStorage.removeItem("token");
     this.#logged.set(false);
   }
-  // Método para registrar un nuevo usuario
- register(data: UserLogin): Observable<unknown> {
-  // Aquí se coloca el console.log para ver el objeto enviado
-  console.log("Datos enviados al servidor PERAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:", data);
-
-  return this.#http.post<unknown>('auth/register', data).pipe(
-    map(response => {
-      console.log("Registro exitoso", response);
-      return response;
-    }),
-    catchError(error => {
-      console.error("Error completo en el registro:", error);
-      return of(null); // O manejar el error de una manera más específica
-    })
-  );
-}
+  register(data: UserLogin): Observable<UserLogin> {
+    console.log("Datos enviados al servidor:", data);
+  
+    return this.#http.post<UserLogin>('auth/register', data).pipe(
+      map(response => {
+        console.log("Registro exitoso", response);
+        return response;
+      }),
+      catchError(error => {
+        // En lugar de simplemente imprimir el error y retornar null, propagamos el error
+        return throwError(() => error);
+      })
+    );
+  }
 isAuthenticated(): boolean {
   const token = localStorage.getItem('token');
  //creado para guardian , saber si esta autenticado  y darle permisoso para ver las diferentes partes de la web

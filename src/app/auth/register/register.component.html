@@ -31,7 +31,7 @@
          required
          [(ngModel)]="newUser.email"
              #emailModel="ngModel"
-             [ngClass]="validClassesEmail(emailModel, 'is-valid' , 'is-invalid')" 
+             [ngClass]="validClasses(emailModel, 'is-valid' , 'is-invalid')" 
          />
     </div>
     <div class="mb-3">
@@ -44,7 +44,7 @@
           required
          [(ngModel)]="newUserEmail"
              #email2Model="ngModel"
-             [ngClass]="validClassesEmail(email2Model, 'is-valid' , 'is-invalid')" 
+             [ngClass]="validClasses(email2Model, 'is-valid' , 'is-invalid')" 
            />
     </div>
     <div class="mb-3">

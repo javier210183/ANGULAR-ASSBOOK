@@ -50,12 +50,6 @@ export class RegisterComponent implements OnInit
         };
      }
     
-        validClassesEmail(ngModel: NgModel, validClass: string, errorClass: string) {
-          return {
-            [validClass]: ngModel.touched && ngModel.valid,
-            [errorClass]: ngModel.touched && ngModel.invalid
-          };
-        }
         changeImage(event: Event) {
           const fileInput = event.target as HTMLInputElement;
           if (!fileInput.files || fileInput.files.length === 0) {
@@ -96,10 +90,16 @@ export class RegisterComponent implements OnInit
               // Redirigir al usuario o mostrar mensaje de éxito
             },
             error: (error) => {
+              // Aquí ahora deberías poder acceder al error real que viene del backend
+              let errorMessage = 'No se pudo completar tu registro. Por favor, intenta de nuevo más tarde.';
+              if (error.error && error.error.message) {
+                // Aquí se maneja el caso en que el mensaje de error es un array
+                errorMessage = Array.isArray(error.error.message) ? error.error.message.join(' ') : error.error.message;
+              }
               Swal.fire({
                 icon: 'error',
                 title: 'Error en el registro',
-                text: 'No se pudo completar tu registro. Por favor, intenta de nuevo más tarde.',
+                text: errorMessage,
               });
               console.error('Error en el registro', error);
               // Mostrar mensaje de error
