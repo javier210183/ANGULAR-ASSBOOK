@@ -5,7 +5,7 @@ import { PostCardComponent } from '../post-card/post-card.component';
 import { PostFormComponent } from '../post-form/post-form.component';
 import { PostFilterPipe } from '../pipes/post-filter.pipe';
 import { PostsService } from '../services/posts.service';
-import { Post } from '../interfaces/post';
+import { Post, Publicaciones } from '../interfaces/post';
 
 @Component({
   selector: 'posts-page',
@@ -16,14 +16,14 @@ import { Post } from '../interfaces/post';
 })
 export class PostsPageComponent implements OnInit {
   #postsService = inject(PostsService);
-  posts: Post[] = [];
+  posts: Publicaciones[] = [];
   search = '';
 
   ngOnInit(): void {
     this.#postsService.getPosts().subscribe(posts => this.posts = posts);
   }
 
-  addPost(post: Post) {
+  addPost(post: Publicaciones) {
     this.posts = [...this.posts, post];
   }
 

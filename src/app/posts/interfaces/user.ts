@@ -1,11 +1,14 @@
 export interface UserLogin {
 
-  name:string;
-  avatar: string;
+  id?: number;
+  name: string;
   email: string;
-  password: string;
+  password?: string;
+  avatar: string;
   lat: number;
   lng: number;
+  me?: boolean;
+
 }
 export interface iLogin {
   
@@ -13,9 +16,20 @@ export interface iLogin {
   password: string;
   latitud?: number;
   longitud?: number;
+
 }
 export interface TokenLogin {
   token:string;
   lat?: number;
   lng?: number;
+}
+export interface User {
+  id?: number;
+  name: string;
+  email: string;
+  password?: string;
+  avatar: string;
+  lat: number;
+  lng: number;
+  me?: boolean;
 }

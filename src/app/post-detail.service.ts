@@ -31,5 +31,6 @@ export class PostDetailService {
     
     return this.http.delete<{ totalLikes: number }>(`${this.#postsUrl}/${postId}/likes`);
   }
+  
 }
 

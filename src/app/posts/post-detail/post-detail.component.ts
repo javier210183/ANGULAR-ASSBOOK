@@ -6,6 +6,8 @@ import { Post } from '../interfaces/post';
 import { PostDetailService } from '../../post-detail.service';
 import { Comment} from '../interfaces/comment';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { UserLogin } from '../interfaces/user';
 @Component({
   selector: 'post-detail',
   standalone: true,
@@ -15,8 +17,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class PostDetailComponent implements OnInit{
   @Input() post!: Post;
-
+  userProfile!: UserLogin;
   #router = inject(Router);
+  avatarUrl: any;
+  name: any;
+  email: any;
+  
+
 
   goBack() {
     this.#router.navigate(['/posts']);
@@ -28,25 +35,47 @@ export class PostDetailComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private postDetailService: PostDetailService,
-    private router: Router // Aquí lo inyecto a través del constructor
+    private router: Router, // Aquí lo inyecto a través del constructor
+    private authService: AuthService, // Inyecta AuthService si lo necesitas
+    
   ) {}
+  loadUserProfile(): void {
+    this.authService.getProfile().subscribe({
+      next: (response: any) => { // Cambio aquí para aceptar cualquier tipo
+        console.log("Respuesta completa de profile:", response);
+        this.userProfile = response.user; // Accede a través de la propiedad 'user'
+        this.name = response.user.name; // Ahora sí, accedemos a 'name'
+        this.email = response.user.email; // Y aquí accedemos a 'email'
+        this.avatarUrl = response.user.avatar;
+        console.log("TU NOMBRE : ", this.name);
+        console.log("TU EMAIL : ", this.email);
+        console.log("URL del avatar:", this.avatarUrl);
+        console.log("ESTE ES TU USUARIOOOOOO   : ",response.user);
+      },
+      error: (error) => console.error('Error obtaining user profile:', error),
+    });
+  }
+  
   ngOnInit(): void {
+    
     this.route.params.subscribe(params => {
       const postId = +params['id']; // el signo + convierte la cadena en número
       if (postId) {
-        this.loadPost(postId);
+       // this.loadPost(postId);
         this.loadComments(postId);
+        console.log("ESTE ES EL POST QUE HEMOS SELECCIONADO EN DETALLE ",this.post);
       }
     });
   }
-
+  
+/*
   loadPost(postId: number): void {
     this.postDetailService.getPostDetails(postId).subscribe(post => {
       this.post = post;
       console.log("EL POOOOST  : DE LOADPOST : ",post);
     });
   }
-
+*/
   loadComments(postId: number): void {
     this.postDetailService.getComments(postId).subscribe({
       next: (comments) => {

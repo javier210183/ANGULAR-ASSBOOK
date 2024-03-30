@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostsService } from '../services/posts.service';
 import { Router } from '@angular/router';
-import { Post } from '../interfaces/post';
+import { Post, Publicaciones } from '../interfaces/post';
 
 @Component({
   selector: 'post-card',
@@ -12,12 +12,13 @@ import { Post } from '../interfaces/post';
   styleUrl: './post-card.component.css',
 })
 export class PostCardComponent {
-  @Input({ required: true }) post!: Post;
+  @Input({ required: true }) post!: Publicaciones;
   @Output() deleted = new EventEmitter<void>();
 
   #postsService = inject(PostsService);
   #router = inject(Router);
   totalLikes!: number;
+
   toggleLike(post: Post) {
     if (!post.likes) this.addVote(true);
     else this.deleteVote();
