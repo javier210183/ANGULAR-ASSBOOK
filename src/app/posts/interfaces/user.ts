@@ -8,6 +8,7 @@ export interface UserLogin {
   lat: number;
   lng: number;
   me?: boolean;
+ 
 
 }
 export interface iLogin {

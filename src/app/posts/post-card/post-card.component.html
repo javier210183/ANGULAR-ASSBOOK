@@ -21,7 +21,7 @@
         }}</small>
       </div>
     </div>
-    @if(post.creator?.me){
+    @if(post.creator.mine){
       <div class="col-auto">
       <button class="btn btn-danger mr-3 h-100 delete" (click)="delete()">
         Delete

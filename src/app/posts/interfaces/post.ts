@@ -12,6 +12,7 @@ export interface Post {
   likes: boolean | null;
   lat?: number; // Opcional, para la geolocalización
   lng?: number; // Opcional, para la geolocalización
+  
 }
 export interface Publicaciones extends Post {
  
@@ -26,5 +27,5 @@ export interface Publicaciones extends Post {
   lat?: number; // Opcional, para la geolocalización
   lng?: number; // Opcional, para la geolocalización
   likes: boolean | null;
-  mine?: boolean;
+  mine:boolean;
 }
