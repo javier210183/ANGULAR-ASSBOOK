@@ -1,7 +1,6 @@
-import { UserLogin } from "./user";
+import { User } from './user';
 
 export interface Post {
-
   totalLikes: any;
   id?: number;
   title?: string;
@@ -12,14 +11,12 @@ export interface Post {
   likes: boolean | null;
   lat?: number; // Opcional, para la geolocalización
   lng?: number; // Opcional, para la geolocalización
-  
 }
 export interface Publicaciones extends Post {
- 
   id?: number;
-  date?:string;
+  date?: string;
   totalLikes: number;
-  creator?: UserLogin;
+  creator?: User;
   title?: string;
   description?: string;
   mood: number;
@@ -27,5 +24,5 @@ export interface Publicaciones extends Post {
   lat?: number; // Opcional, para la geolocalización
   lng?: number; // Opcional, para la geolocalización
   likes: boolean | null;
-  mine:boolean;
+  mine?: boolean;
 }

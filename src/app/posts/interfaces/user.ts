@@ -32,5 +32,5 @@ export interface User {
   avatar: string;
   lat: number;
   lng: number;
-  me?: boolean;
+  me: boolean;
 }
