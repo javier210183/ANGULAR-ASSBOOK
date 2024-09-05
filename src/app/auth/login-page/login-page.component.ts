@@ -19,7 +19,7 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, FormsModule,GoogleLoginDirective,FbLoginDirective,SweetAlert2Module],
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css'] // Asegúrate de que la propiedad se llame styleUrls en plural
+  styleUrls: ['./login-page.component.css'] // Asegurarse de que la propiedad se llame styleUrls en plural
 })
 
 export class LoginPageComponent implements OnInit ,OnDestroy{ // Implementa la interfaz OnInit
@@ -58,7 +58,7 @@ credentialsSub!: Subscription;
         longitud: this.location.longitude,
       };
 
-      console.log("Intentando iniciar sesión con:", LoginData);
+     // console.log("Intentando iniciar sesión con:", LoginData);
 
       this.#authService.login(LoginData).subscribe({
         next: () => {

@@ -15,11 +15,11 @@ export class AuthService {
       } 
       else {
         return this.#http.get<void>('auth/validate').pipe(
-          map(() => {console.log("HEW ENTRADO EN AUTH/VALIDATE PERRAAAAAAAAAAAAAAAAAAAAA");
+          map(() => {console.log("HEW ENTRADO EN AUTH/VALIDATE ");
             this.#logged.set(true);
             return true;
           }),
-          catchError(() => {console.log("no he entrado BASURAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA       AUTH/VALIDATE");
+          catchError(() => {console.log("no he entrado       AUTH/VALIDATE");
             localStorage.removeItem('token');
             return of(false);
           })
@@ -40,26 +40,26 @@ export class AuthService {
 
 //cuando se pulsa el boton de login , hay que invocar este metodopasandole el usuario(interfaz)password y coordenada y subscribirme
   login(data: iLogin ): Observable<void> {
-    console.log("AQUI ESTA TU DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",data);
+   // console.log("AQUI ESTA TU DATA",data);
     return this.#http.post<TokenResponse>('auth/login', data).pipe(map(r => {
       localStorage.setItem("token", r.accessToken);
-      console.log("AQUI ESTA TU TOKEN BASURAAAAAAAAAAAAAAAA",localStorage.getItem("token"))
+     // console.log("AQUI ESTA TU TOKEN ",localStorage.getItem("token"))
       this.#logged.set(true);
     }))
   }
   loginGoogle(data: TokenLogin ): Observable<void> {
-    console.log("AQUI ESTA TU DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",data);
+    //console.log("AQUI ESTA TU DATA",data);
     return this.#http.post<TokenResponse>('auth/google', data).pipe(map(r => {
       localStorage.setItem("token", r.accessToken);
-      console.log("AQUI ESTA TU TOKEN BASURAAAAAAAAAAAAAAAA",localStorage.getItem("token"))
+      //console.log("AQUI ESTA TU TOKEN ",localStorage.getItem("token"))
       this.#logged.set(true);
     }))
   }
   loginFacebook(data: TokenLogin ): Observable<void> {
-    console.log("AQUI ESTA TU DATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",data);
+   // console.log("AQUI ESTA TU DATA",data);
     return this.#http.post<TokenResponse>('auth/facebook', data).pipe(map(r => {
       localStorage.setItem("token", r.accessToken);
-      console.log("AQUI ESTA TU TOKEN BASURAAAAAAAAAAAAAAAA",localStorage.getItem("token"))
+      //console.log("AQUI ESTA TU TOKEN ",localStorage.getItem("token"))
       this.#logged.set(true);
     }))
   }
@@ -69,7 +69,7 @@ export class AuthService {
     this.#logged.set(false);
   }
   register(data: UserLogin): Observable<UserLogin> {
-    console.log("Datos enviados al servidor:", data);
+   // console.log("Datos enviados al servidor:", data);
   
     return this.#http.post<UserLogin>('auth/register', data).pipe(
       map(response => {
@@ -110,7 +110,7 @@ updateProfile(data: { name: string; email: string }): Observable<UserLogin> {
 
 
 changePassword(data: {  password: string }): Observable<any> {
-  console.log("VOY A ENVIAR EL DATA :",data);
+ // console.log("VOY A ENVIAR EL DATA :",data);
   return this.#http.put('users/me/password', data);
 }
 
@@ -120,7 +120,7 @@ changePassword(data: {  password: string }): Observable<any> {
 updateAvatar(data: {  avatar: string}): Observable<any> {
   //const formData = new FormData();
   //formData.append('avatar', file);
-  console.log("VOY A ENVIAR EL AVATA :", data);
+  //console.log("VOY A ENVIAR EL AVATAR :", data);
 
   return this.#http.put('users/me/avatar', data);
 }

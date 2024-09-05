@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit
       this.newUser.lat = this.location.latitude;
       this.newUser.lng = this.location.longitude;
       console.log(
-        'esta es tu ubicacion ACTUALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL: ',
+        'esta es tu ubicacion ACTUAL: ',
         this.location
       );
     }
@@ -74,8 +74,8 @@ export class RegisterComponent implements OnInit
               title: 'Oops...',
               text: 'Los emails no coinciden.',
             });
-            console.log('Email:', this.newUser.email);
-    console.log('Confirm Email:', this.newUserEmail);
+           // console.log('Email:', this.newUser.email);
+           //   console.log('Confirm Email:', this.newUserEmail);
             return;
           }
           
@@ -90,7 +90,7 @@ export class RegisterComponent implements OnInit
               // Redirigir al usuario o mostrar mensaje de éxito
             },
             error: (error) => {
-              // Aquí ahora deberías poder acceder al error real que viene del backend
+              // Aquí ahora debería poder acceder al error real que viene del backend
               let errorMessage = 'No se pudo completar tu registro. Por favor, intenta de nuevo más tarde.';
               if (error.error && error.error.message) {
                 // Aquí se maneja el caso en que el mensaje de error es un array
@@ -111,7 +111,7 @@ export class RegisterComponent implements OnInit
   }
   
 }
-console.log("esta es tu ubicacion ACTUALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL: ", location);
+console.log("esta es tu ubicacion ACTUAL: ", location);
 /*
 
   formGroup: FormGroup | undefined;
