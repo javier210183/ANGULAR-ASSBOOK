@@ -28,9 +28,9 @@ export class RegisterComponent implements OnInit
         name: '',
         lng: 0,
         lat: 0,
-        avatar: '', // asignar el valor del avatar aquí
-        email: '', // asignar el valor del email aquí
-        password: '', // asignar el valor de la contraseña aquí
+        avatar: '', 
+        email: '', 
+        password: '', 
       };
       this.location = await MyGeolocationService.getLocation();
       this.newUser.lat = this.location.latitude;
@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit
         this.location
       );
     }
-    constructor(private authService: AuthService) {} // Inyecta AuthService aquí
+    constructor(private authService: AuthService) {} 
 
       newUser!: UserLogin;
       validClasses(ngModel: NgModel, validClass: string, errorClass: string) {
@@ -112,28 +112,3 @@ export class RegisterComponent implements OnInit
   
 }
 console.log("esta es tu ubicacion ACTUAL: ", location);
-/*
-
-  formGroup: FormGroup | undefined;
-
-  constructor(private fb: FormBuilder) {}
-
-  ngOnInit() {
-    this.formGroup = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.sameAs('password')]],
-      fechaNacimiento: ['', Validators.required],
-      sexo: ['', Validators.required],
-      pais: ['', Validators.required]
-    });
-  }
-
-  onSubmit() {
-    if (this.formGroup.valid) {
-      // Enviar los datos al servidor
-    }
-  }
-
-*/
