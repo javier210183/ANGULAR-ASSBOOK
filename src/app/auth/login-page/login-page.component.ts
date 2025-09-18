@@ -19,14 +19,14 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [CommonModule, FormsModule,GoogleLoginDirective,FbLoginDirective,SweetAlert2Module],
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css'] // Asegurarse de que la propiedad se llame styleUrls en plural
+  styleUrls: ['./login-page.component.css'] 
 })
 
-export class LoginPageComponent implements OnInit ,OnDestroy{ // Implementa la interfaz OnInit
+export class LoginPageComponent implements OnInit ,OnDestroy{ 
   location!:GeolocationCoordinates;
 email='';
 password='';  
-#router=inject(Router);//utilizar la inyeccion de las rutas
+#router=inject(Router);
 #authService=inject(AuthService);
 #loadGoogle = inject(LoadGoogleApiService);
 credentialsSub!: Subscription;
@@ -49,7 +49,7 @@ credentialsSub!: Subscription;
     };
   }
   
-//SALTA LA PAG 34 AL INTENTAR HACER LOGIN
+
     login() {
       const LoginData: iLogin = {
         email: this.email,
@@ -58,11 +58,11 @@ credentialsSub!: Subscription;
         longitud: this.location.longitude,
       };
 
-     // console.log("Intentando iniciar sesión con:", LoginData);
+     
 
       this.#authService.login(LoginData).subscribe({
         next: () => {
-          // Navegación a posts si el login es exitoso
+          
           this.#router.navigate(['/posts']);
         },
         error: (error) => {
@@ -75,7 +75,7 @@ credentialsSub!: Subscription;
     }
 
   register() {
-    this.router.navigate(['/auth/register']); // Usa this.router para navegar
+    this.router.navigate(['/auth/register']); 
   }
   loggedFacebook(resp: fb.StatusResponse) {
     // Send this to your server
