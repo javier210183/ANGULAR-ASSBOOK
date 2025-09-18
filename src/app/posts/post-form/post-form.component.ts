@@ -28,7 +28,7 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
   fileName = '';
   saved = false;
   location: GeolocationCoordinates | undefined;
-  // Añadir postType con un valor inicial que refleje tu preferencia por defecto, por ejemplo, 'photo'
+  // Añadir postType con un valor inicial que refleje la preferencia por defecto, por ejemplo, 'photo'
   postType: string = 'photo'; // 'photo' o 'location' esta variable es la central en lo que se refiere a la geolocation
 
   moveMap(coords: Coordinates) {
@@ -38,8 +38,8 @@ export class PostFormComponent implements OnInit, CanComponentDeactivate {
   
   
   constructor(
-    private myGeoLocationService: MyGeolocationService, // Añade esto
-    // ...otros servicios inyectados
+    private myGeoLocationService: MyGeolocationService, 
+    
   ) {
     this.resetNewPost();
   }
