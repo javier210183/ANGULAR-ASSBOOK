@@ -12,12 +12,12 @@ export class LoadGoogleApiService {
 
   constructor() {
     if (this.#clientId === null) {
-      // Custom error message
+      
       throw new Error(
         'LoadGoogleApiService: You must call provideGoogleId in your providers array'
       );
     }
-    this.#loader = this.#loadApi(); // Start loading the API
+    this.#loader = this.#loadApi(); 
   }
 
   get credential$() {
@@ -25,10 +25,10 @@ export class LoadGoogleApiService {
   }
 
   async setGoogleBtn(btn: HTMLElement) {
-    await this.#loader; // Waits for the API to be loaded (if not loaded yet)
+    await this.#loader; 
     google.accounts.id.renderButton(
       btn,
-      { theme: 'filled_blue', size: 'large', type: 'standard' } // customization attributes
+      { theme: 'filled_blue', size: 'large', type: 'standard' } 
     );
   }
 
