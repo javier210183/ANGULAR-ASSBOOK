@@ -42,7 +42,7 @@ export class PostCardComponent {
       },
       error: (error) => {
         console.error("Error al votar: ", error);
-        // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
+        // Aquí puedo manejar el error, por ejemplo, mostrando un mensaje al usuario
       }
     });
   }
