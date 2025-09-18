@@ -15,7 +15,7 @@ export class LoadFbApiService {
         'FacebookLogiService: You must call provideFacebookId in app.config.ts to pass the APP_ID and API Version'
       );
     }
-    this.#loader = this.#loadApi(); // Start loading the API
+    this.#loader = this.#loadApi(); /
   }
 
   async login(scopes: string): Promise<fb.StatusResponse> {
@@ -24,7 +24,7 @@ export class LoadFbApiService {
     try {
       return await this.isLogged();
     } catch (e) {
-      // Not logged in
+      
       return new Promise((resolve, reject) => {
         FB.login(
           (respLogin: fb.StatusResponse) => {
